@@ -8,9 +8,9 @@ datasources:
     type: postgres
     access: proxy
     url: db.:5432
-    database: fastapi_traefik
-    user: fastapi_traefik
+    database: postgres
+    user: postgres
     secureJsonData:
-      password: 'fastapi_traefik'
+      password: 'postgres'
     jsonData:
       sslmode: 'disable'
