@@ -2,7 +2,7 @@
 Module to define the predicts router.
 """
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlmodel.ext.asyncio.session import AsyncSession
 from pydantic import BaseModel
 from app.db.engine import get_session
@@ -21,15 +21,18 @@ class ProcessTextRequestModel(BaseModel):
 
 
 @router.post("")
-async def predict(request: ProcessTextRequestModel, session: AsyncSession = Depends(get_session)):
+async def predict(payload: ProcessTextRequestModel, request: Request, session: AsyncSession = Depends(get_session)):
     """
     Predict the sentiment of the text
 
     Args:
-        request (ProcessTextRequestModel): Request model
+        payload (ProcessTextRequestModel): Request model
+        request (Request): FastAPI request object
 
     Return:
         dict: Dictionary with the predicted sentiment
     """
-    predictions = await make_predictions(request.sentences, session)
+    model = request.app.state.model
+    count_vectorizer = request.app.state.count_vectorizer
+    predictions = await make_predictions(payload.sentences, session, model, count_vectorizer)
     return {"predictions": predictions}

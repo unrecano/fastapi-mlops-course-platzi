@@ -1,11 +1,9 @@
 import numpy as np
+from typing import Any
 from utils import preprocess_text
-import joblib
 from sqlmodel.ext.asyncio.session import AsyncSession
 from fastapi.concurrency import run_in_threadpool
 from app.db.models import PredictionsTickets
-from app.settings import settings
-import os
 
 label_mapping = {
     "0": "Bank Account Services",
@@ -14,22 +12,23 @@ label_mapping = {
 }
 
 
-def run_model_inference(sentences: list) -> list:
+def run_model_inference(sentences: list, model: Any, count_vectorizer: Any) -> list:
     """
     Run model inference
 
     Args:
         sentences (list): List of sentences to predict
+        model (Any): The preloaded ML model
+        count_vectorizer (Any): The preloaded CountVectorizer
 
     Return:
         list: List of predictions
     """
-    model_path = os.path.join(settings.models_path, "model.pkl")
-    model = joblib.load(model_path)
-
     predictions = []
     for sentence in sentences:
-        process_data_vectorized = preprocess_text(sentence.text)
+        process_data_vectorized = preprocess_text(
+            sentence.text, vectorizer=count_vectorizer
+        )
         X_dense = [sparse_matrix.toarray() for sparse_matrix in process_data_vectorized]
         X_dense = np.vstack(X_dense)
         preds = model.predict(X_dense)
@@ -44,18 +43,24 @@ def run_model_inference(sentences: list) -> list:
     return predictions
 
 
-async def make_predictions(sentences: list, session: AsyncSession) -> list:
+async def make_predictions(
+    sentences: list, session: AsyncSession, model: Any, count_vectorizer: Any
+) -> list:
     """
     Make predictions and save them to the database asynchronously.
 
     Args:
         sentences (list): List of sentences to predict
         session (AsyncSession): Session to use for database operations
+        model (Any): The preloaded ML model
+        count_vectorizer (Any): The preloaded CountVectorizer
 
     Return:
         list: List of predictions
     """
-    predictions = await run_in_threadpool(run_model_inference, sentences)
+    predictions = await run_in_threadpool(
+        run_model_inference, sentences, model, count_vectorizer
+    )
 
     for item in predictions:
         prediction_ticket = PredictionsTickets(
