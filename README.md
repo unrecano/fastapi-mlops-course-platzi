@@ -76,9 +76,16 @@ The three prediction labels are:
 │       │   └── utils.py           # NLP preprocessing pipeline
 │       └── healthcheck/
 │           └── router.py          # GET /health endpoint
+├── tests/
+│   ├── conftest.py                # Pytest async fixtures and mocks
+│   ├── integration/               # API end-to-end testing
+│   └── unit/                      # Isolated functions testing
 ├── Dockerfile
 ├── docker-compose.yaml
+├── pyproject.toml                 # Ruff formatting & Pytest configurations
+├── Makefile                       # Automation shortcuts for DevOps
 ├── requirements.txt
+├── requirements-test.txt          # Testing dependencies (pytest, ruff...)
 ├── .env.example                   # Environment variable template
 └── .gitignore
 ```
@@ -124,6 +131,40 @@ docker compose up --build
 
 ```bash
 curl http://localhost:8000/health
+```
+
+---
+
+## 🛠️ Local Development (Makefile)
+
+A `Makefile` is provided to simplify local orchestration for development, testing, and formatting.
+
+### Setup Environment
+Creates a virtual environment and installs the project and testing dependencies (along with NLP corpora):
+```bash
+make setup
+```
+
+### Formatting & Linting
+The project uses **Ruff** for lightning-fast analysis and strict PEP-8 compliant auto-formatting (88 lines string-length):
+```bash
+make check   # Statically validate code
+make format  # Automatically format code and fix lint errors
+```
+
+### Testing
+Validates the FastAPI application behavior by mocking models and the database via **Pytest**:
+```bash
+make test              # Runs the complete test suite with coverage
+make test-unit         # Runs only unit layers
+make test-integration  # Runs E2E integration tests
+```
+
+### Docker Operations
+```bash
+make docker-up    # docker compose up -d --build
+make docker-down  # docker compose down
+make docker-logs  # docker compose logs -f web
 ```
 
 ---
@@ -191,6 +232,8 @@ This project applies several production-grade practices covered in the Platzi ML
 - **[Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/)** — Type-safe environment configuration
 - **[Docker Compose](https://docs.docker.com/compose/)** — Multi-service orchestration
 - **[Grafana](https://grafana.com/)** — Observability dashboards
+- **[Pytest](https://docs.pytest.org/en/stable/)** & **[pytest-asyncio](https://pytest-asyncio.readthedocs.io/en/latest/)** — Testing framework
+- **[Ruff](https://docs.astral.sh/ruff/)** — Extremely fast Python linter and code formatter
 
 ---
 
