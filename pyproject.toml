@@ -1,0 +1,32 @@
+[tool.ruff]
+# Set the maximum line length to 88 (Standard for Black and Ruff)
+line-length = 88
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".git",
+    "venv",
+    ".venv",
+    "__pycache__",
+    ".pytest_cache",
+]
+
+[tool.ruff.lint]
+# Enable Pyflakes (F) and a subset of the pycodestyle (E)  codes by default.
+select = ["E", "F", "I"] # "I" is isort for import sorting
+ignore = []
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, auto-format to target 88 string-length.
+line-magic-trailing-comma = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+addopts = "-v --cov=src --cov-report=term-missing --cov-fail-under=80"
+pythonpath = [
+  "src"
+]
