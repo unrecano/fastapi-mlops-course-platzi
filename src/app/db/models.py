@@ -2,7 +2,7 @@
 Module to define database models.
 """
 
-from sqlmodel import SQLModel, Field
+from sqlmodel import Field, SQLModel
 
 
 class PredictionsTickets(SQLModel, table=True):

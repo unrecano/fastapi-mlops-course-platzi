@@ -1,20 +1,19 @@
-import pytest_asyncio
-from httpx import AsyncClient, ASGITransport
 from typing import AsyncGenerator
 from unittest.mock import AsyncMock
 
-from app.main import app
+import numpy as np
+import pytest_asyncio
+from httpx import ASGITransport, AsyncClient
+from scipy.sparse import csr_matrix
+
 from app.db.engine import get_session
+from app.main import app
 
 
 # Mock para el modelo de ML y CountVectorizer
 class MockModel:
     def predict(self, X):
         return [0] * len(X)  # Retorna una lista con la categoría "0"
-
-
-from scipy.sparse import csr_matrix
-import numpy as np
 
 
 class MockVectorizer:

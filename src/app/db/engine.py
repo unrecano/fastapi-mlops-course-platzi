@@ -2,10 +2,11 @@
 Module to create database and tables
 """
 
-from app.settings import settings
-from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import create_async_engine
+from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
+
+from app.settings import settings
 
 async_db_url = settings.db_url.replace("postgresql://", "postgresql+asyncpg://")
 engine = create_async_engine(async_db_url, echo=True)

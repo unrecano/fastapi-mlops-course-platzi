@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
-from app.predicts.services import run_model_inference
+
 from app.predicts.router import Sentence
+from app.predicts.services import run_model_inference
 
 
 @patch("app.predicts.services.preprocess_text")

@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 
-from app.lifespan import lifespan
 from app.healthcheck.router import router as healthcheck_router
+from app.lifespan import lifespan
 from app.predicts.router import router as predicts_router
-
 
 app = FastAPI(
     title="Sentiment Analysis API",

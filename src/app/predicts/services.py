@@ -1,9 +1,12 @@
-import numpy as np
 from typing import Any
-from .utils import preprocess_text
-from sqlmodel.ext.asyncio.session import AsyncSession
+
+import numpy as np
 from fastapi.concurrency import run_in_threadpool
+from sqlmodel.ext.asyncio.session import AsyncSession
+
 from app.db.models import PredictionsTickets
+
+from .utils import preprocess_text
 
 label_mapping = {
     "0": "Bank Account Services",

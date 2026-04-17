@@ -2,15 +2,15 @@
 This module contains functions to preprocess text and vectorize it.
 """
 
+import os
 from typing import Any
 
-from sklearn.feature_extraction.text import TfidfTransformer
-from nltk import word_tokenize
 import nltk
+from nltk import word_tokenize
 from nltk.corpus import stopwords
-from app.settings import settings
-import os
+from sklearn.feature_extraction.text import TfidfTransformer
 
+from app.settings import settings
 
 PATH_PIKL = os.path.join(settings.models_path, "count_vectorizer.pkl")
 

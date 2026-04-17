@@ -12,17 +12,13 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-# Enable Pyflakes (F) and a subset of the pycodestyle (E)  codes by default.
-select = ["E", "F", "I"] # "I" is isort for import sorting
+select = ["E", "F", "I"]
 ignore = []
 
 [tool.ruff.format]
-# Like Black, use double quotes for strings.
 quote-style = "double"
-# Like Black, indent with spaces, rather than tabs.
 indent-style = "space"
-# Like Black, auto-format to target 88 string-length.
-line-magic-trailing-comma = false
+skip-magic-trailing-comma = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

@@ -3,6 +3,7 @@ Module to manage application settings.
 """
 
 import pathlib
+
 from pydantic import Field
 from pydantic_settings import BaseSettings
 

@@ -1,4 +1,8 @@
-from app.predicts.utils import tokenize_text, remove_stopwords, pos_tagging
+from app.predicts.utils import (
+    pos_tagging,
+    remove_stopwords,
+    tokenize_text,
+)
 
 
 def test_tokenize_text():
